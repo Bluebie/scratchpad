@@ -10,6 +10,9 @@
       "import": "./index.mjs"
     }
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "test": "npm run build; mocha --exit",
     "build": "rollup -c; standard --fix index.cjs",
