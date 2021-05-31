@@ -1,9 +1,9 @@
 # ScratchPad
-Temporary file you can offload objects in to, with very fast performance to read them back later. Great for situations where you need to ingest a large amount of data out of order, look over it, and then read it back in a different order later. `npm i --save scratchpad`
+Temporary file you can offload objects in to, with very fast performance to read them back later. Great for situations where you need to ingest a large amount of data out of order, look over it, and then read it back in a different order later. `npm i --save file-scratch-pad`
 
 ```mjs
-import ScratchPad from 'scratchpad'
-// or const ScratchPad = require('scratchpad')
+import ScratchPad from 'file-scratch-pad'
+// or const ScratchPad = require('file-scratch-pad')
 
 pad = await ScratchPad.create()
 const read1 = await pad.write(someBigObject)
