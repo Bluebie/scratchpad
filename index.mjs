@@ -6,6 +6,14 @@ import { join } from 'path'
 import { serialize, deserialize } from 'v8'
 
 /**
+ * @typedef {boolean|null|undefined|number|bigint|string} PrimitiveNonSymbol
+ */
+
+/**
+ * @typedef {PrimitiveNonSymbol|Date|RegExp|Blob|File|FileList|ArrayBuffer|ArrayBufferTypes|ImageBitmap|ImageData|Array|object|Map|Set|Error} StructuredCloneable
+ */
+
+/**
  * Scratch Pad is a file you can append data to, and get back a function which
  * when called resolves with the object you originally wrote
  */
@@ -13,6 +21,7 @@ export default class ScratchPad {
   /**
    * create a new temporary scratch file, where objects can be temporarily written out
    * @returns {ScratchPad}
+   * @async
    */
   static async create () {
     const id = `scratch-pad-${pid}-${this.seq++}.v8-serializer`
@@ -23,9 +32,9 @@ export default class ScratchPad {
   }
 
   /**
-   * Create a ScratchPad interface from a FileHandle
-   * @param {fs.FileHandle} fileRef
-   * @param {string} id
+   * Internal, use ScratchPad.create instead
+   * @param {fs.FileHandle} file - file handle to unlinked temp file we can append and read
+   * @param {string} id - name used to lock resouces
    */
   constructor (fileRef, id) {
     this.ref = fileRef
@@ -33,6 +42,12 @@ export default class ScratchPad {
     this.length = 0
   }
 
+  /**
+   * Write an object to the ScratchPad, returning an function which returns a promise of the object when run
+   * @param {StructuredCloneable} object
+   * @returns {ReaderCallback}
+   * @async
+   */
   async write (object) {
     const encoded = serialize(object)
     return await lockWhile(['scratch-file', this.id], async () => {
@@ -53,9 +68,16 @@ export default class ScratchPad {
   }
 
   /**
-   * close the scratch file, deleting it
+   * Read function, when called returns a promise which resolves with a structured clone of the original object written to the scratchpad
+   * @callback ReaderFunction
+   * @returns {StructuredCloneable} - deserialised deep copy of object given to write() command that created this reader
+   * @async
    */
-  async close () {
+
+  /**
+   * Close the scratch file, freeing it's space from the local disk
+   */
+  close () {
     this.ref.close()
     this.ref = undefined
   }

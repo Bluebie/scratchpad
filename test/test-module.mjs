@@ -17,8 +17,10 @@ const testData = [
   crypto.randomBytes(1024 * 8),
   Date.now(),
   new Date(),
+  crypto.randomBytes(1024 * 64),
   Infinity,
   -Infinity,
+  crypto.randomBytes(1024 * 32),
   [0, -1, -2]
 ]
 

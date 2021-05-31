@@ -2,8 +2,7 @@
   "name": "scratchpad",
   "version": "0.9.0",
   "description": "Temporary file you can easily dump any v8 serializer compatible object to, exchanging it for a function, which when called, loads the object back in to memory. Utility for processing large streams, where you may need to reorder or reduce the data after it's been fully ingested.",
-  "type": "module",
-  "main": "index.mjs",
+  "main": "index.cjs",
   "exports": {
     ".": {
       "require": "./index.cjs",
@@ -38,6 +37,7 @@
   "homepage": "https://github.com/Bluebie/scratchpad#readme",
   "devDependencies": {
     "chai": "^4.3.4",
+    "expose-gc": "^1.0.0",
     "mocha": "^8.4.0",
     "rollup": "^2.50.4",
     "standard": "^16.0.3"
