@@ -1,12 +1,14 @@
 {
   "name": "file-scratch-pad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Temporary file you can easily dump any v8 serializer compatible object to, exchanging it for a function, which when called, loads the object back in to memory. Utility for processing large streams, where you may need to reorder or reduce the data after it's been fully ingested.",
   "main": "index.cjs",
+  "module": "index.js",
+  "type": "module",
   "exports": {
     ".": {
-      "require": "./index.cjs",
-      "import": "./index.mjs"
+      "import": "./index.js",
+      "require": "./index.cjs"
     }
   },
   "engines": {

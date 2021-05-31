@@ -15,6 +15,8 @@ const v8 = require('v8')
  * @typedef {PrimitiveNonSymbol|Date|RegExp|Blob|File|FileList|ArrayBuffer|ArrayBufferTypes|ImageBitmap|ImageData|Array|object|Map|Set|Error} StructuredCloneable
  */
 
+let seq = 0
+
 /**
  * Scratch Pad is a file you can append data to, and get back a function which
  * when called resolves with the object you originally wrote
@@ -26,7 +28,7 @@ class ScratchPad {
    * @async
    */
   static async create () {
-    const id = `scratch-pad-${process.pid}-${this.seq++}.v8-serializer`
+    const id = `scratch-pad-${process.pid}-${seq++}.v8-serializer`
     const tempPath = path.join(os.tmpdir(), id)
     const fileRef = await fs.promises.open(tempPath, 'wx+')
     await fs.promises.unlink(tempPath)
@@ -84,7 +86,5 @@ class ScratchPad {
     this.ref = undefined
   }
 }
-
-ScratchPad.seq = 0
 
 module.exports = ScratchPad

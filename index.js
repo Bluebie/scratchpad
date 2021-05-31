@@ -13,6 +13,8 @@ import { serialize, deserialize } from 'v8'
  * @typedef {PrimitiveNonSymbol|Date|RegExp|Blob|File|FileList|ArrayBuffer|ArrayBufferTypes|ImageBitmap|ImageData|Array|object|Map|Set|Error} StructuredCloneable
  */
 
+let seq = 0
+
 /**
  * Scratch Pad is a file you can append data to, and get back a function which
  * when called resolves with the object you originally wrote
@@ -24,7 +26,7 @@ export default class ScratchPad {
    * @async
    */
   static async create () {
-    const id = `scratch-pad-${pid}-${this.seq++}.v8-serializer`
+    const id = `scratch-pad-${pid}-${seq++}.v8-serializer`
     const tempPath = join(tmpdir(), id)
     const fileRef = await fs.open(tempPath, 'wx+')
     await fs.unlink(tempPath)
@@ -82,5 +84,3 @@ export default class ScratchPad {
     this.ref = undefined
   }
 }
-
-ScratchPad.seq = 0

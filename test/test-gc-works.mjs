@@ -2,13 +2,16 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai'
 import crypto from 'crypto'
-import ScratchPad from '../index.mjs'
+import ScratchPad from '../index.js'
 import gc from 'expose-gc/function.js'
 import { memoryUsage } from 'process'
 
 const get1mb = () => crypto.randomBytes(1024 * 1024)
 
-describe('ScratchPad genuinely works well with GC and doesn\'t memory leak', async () => {
+describe('ScratchPad genuinely works well with GC and doesn\'t memory leak', async function () {
+  this.timeout(5000)
+  this.slow(500)
+
   let pad
   let memUseBefore
   before(async () => {

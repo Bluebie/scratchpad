@@ -1,10 +1,9 @@
 export default [
   {
-    input: 'index.mjs',
+    input: 'index.js',
     output: {
       file: 'index.cjs',
       format: 'cjs',
-      name: 'ScratchPad',
       exports: 'auto'
     },
     external: [

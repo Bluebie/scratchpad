@@ -1,8 +1,8 @@
 /* eslint-env mocha */
 /* eslint-disable no-unused-expressions */
-import { expect } from 'chai'
-import crypto from 'crypto'
-import ScratchPad from '../index.js'
+const { expect } = require('chai')
+const crypto = require('crypto')
+const ScratchPad = require('../index.cjs')
 
 const testData = [
   'foo',
@@ -17,7 +17,7 @@ const testData = [
   [0, -1, -2]
 ]
 
-describe('index.js - esm module version', () => {
+describe('index.cjs - commonjs version', () => {
   /** @type {ScratchPad} */
   let scratch
 
